@@ -44,6 +44,17 @@ export class TitularListComponent implements AfterViewInit {
   nuevo() { this.openDialog('create'); }
   editar(row: TitularRead) { this.openDialog('edit', row); }
 
+  eliminar(row: TitularRead) {
+    if (!confirm(`¿Eliminar usuario ${row.nombre}?`)) return;
+
+    this.svc.delete(row.id_titular).subscribe({
+      next: () => {
+        this.snack.open('titular eliminado', 'OK', { duration: 3000 });
+        this.reload();
+      },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+    });
+  }
   private openDialog(mode: 'create' | 'edit', row?: TitularRead) {
     this.dialog.open(TitularDialogComponent, {
       width: '500px',
