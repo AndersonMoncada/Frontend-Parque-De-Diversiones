@@ -15,6 +15,10 @@ export class TitularService {
     return this.http.get<TitularRead[]>(this.base, { params });
   }
 
+  get(id: string): Observable<TitularRead> {
+    return this.http.get<TitularRead>(`${this.base}/${id}`);
+  }
+
   create(body: TitularCreate): Observable<TitularRead> {
     return this.http.post<TitularRead>(this.base, body);
   }

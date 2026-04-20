@@ -12,11 +12,15 @@ export class FisicaService {
 
   list(): Observable<FisicaRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<FisicaRead[]>(this.base, { params });
+    return this.http.get<FisicaRead[]>(`${this.base}`, { params });
+  }
+
+  get(id: string): Observable<FisicaRead> {
+    return this.http.get<FisicaRead>(`${this.base}/${id}`);
   }
 
   create(body: FisicaCreate): Observable<FisicaRead> {
-    return this.http.post<FisicaRead>(this.base, body);
+    return this.http.post<FisicaRead>(`${this.base}`, body);
   }
 
   delete(id: string): Observable<void> {
