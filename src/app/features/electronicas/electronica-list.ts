@@ -43,6 +43,18 @@ export class ElectronicaListComponent implements AfterViewInit {
 
   nuevo() { this.openDialog('create'); }
   editar(row: ElectronicaRead) { this.openDialog('edit', row); }
+  
+  eliminar(row: ElectronicaRead) {
+    if (!confirm(`¿Eliminar electronica ${row.id_atraccion}?`)) return;
+
+    this.svc.delete(row.id_electronica).subscribe({
+      next: () => {
+        this.snack.open('id_electronica eliminado', 'OK', { duration: 3000 });
+        this.reload();
+      },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+    });
+  }
 
   private openDialog(mode: 'create' | 'edit', row?: ElectronicaRead) {
     this.dialog.open(ElectronicaDialogComponent, { width: '500px', data: { mode, row } })

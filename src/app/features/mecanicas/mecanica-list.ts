@@ -45,4 +45,16 @@ export class MecanicaListComponent implements AfterViewInit {
     this.dialog.open(MecanicaDialogComponent, { width: '400px' })
       .afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
   }
+
+  eliminar(row: MecanicaRead) {
+    if (!confirm(`¿Eliminar Mecanica ${row.id_mecanica}?`)) return;
+
+    this.svc.delete(row.id_mecanica).subscribe({
+      next: () => {
+        this.snack.open('Usuario eliminado', 'OK', { duration: 3000 });
+        this.reload();
+      },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+    });
+  }
 }
