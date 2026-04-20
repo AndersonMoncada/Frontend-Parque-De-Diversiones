@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nueva Entrada' : 'Editar Entrada' }}</h2>
+<mat-dialog-content class="dialog-body">
+  <form [formGroup]="form" class="grid">
+    
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Codigo</mat-label>
+      <input matInput formControlName="codigo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="precio" />
+    </mat-form-field>
+
+      <mat-slide-toggle formControlName="reingreso" class="span-2">
+        Permite reingreso
+      </mat-slide-toggle>
+
+        <mat-form-field appearance="outline" class="span-2">
+      <mat-label>IDTitular</mat-label>
+       <input matInput formControlName="id_titular">
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()">Guardar</button>
+</mat-dialog-actions>
