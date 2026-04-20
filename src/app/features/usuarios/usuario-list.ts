@@ -43,6 +43,18 @@ export class UsuarioListComponent implements AfterViewInit {
 
   nuevo() { this.openDialog('create'); }
   editar(row: UsuarioRead) { this.openDialog('edit', row); }
+  
+  eliminar(row: UsuarioRead) {
+    if (!confirm(`¿Eliminar usuario ${row.nombre_usuario}?`)) return;
+
+    this.svc.delete(row.id_usuario).subscribe({
+      next: () => {
+        this.snack.open('Usuario eliminado', 'OK', { duration: 3000 });
+        this.reload();
+      },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+    });
+  }
 
   private openDialog(mode: 'create' | 'edit', row?: UsuarioRead) {
     this.dialog.open(UsuarioDialogComponent, {
