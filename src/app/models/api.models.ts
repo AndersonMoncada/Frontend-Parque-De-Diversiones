@@ -1,3 +1,4 @@
+// ---------- USUARIO ----------
 export interface UsuarioRead {
   id_usuario: string;
   nombre_usuario: string;
@@ -20,7 +21,7 @@ export interface UsuarioUpdate {
   activo?: boolean;
 }
 
-// Titular
+// ---------- TITULAR ----------
 export interface TitularRead {
   id_titular: string;
   nombre: string;
@@ -44,7 +45,7 @@ export interface TitularUpdate {
   telefono?: string | null;
 }
 
-// Visitante
+// ---------- VISITANTE ----------
 export interface VisitanteRead {
   id_visitante: string;
   nombre_visitante: string;
@@ -72,7 +73,96 @@ export interface VisitanteUpdate {
   id_usuario_edita: string;
 }
 
-// Atracciones
+// ---------- ENTRADA ----------
+export interface EntradaRead {
+  id_entrada: string;
+  codigo: string;
+  precio: number;
+  reingreso: boolean;
+  fecha: string | null;
+  id_titular: string;
+  fecha_creacion: string | null;
+  fecha_edicion: string | null;
+  id_usuario_creacion: string;
+  id_usuario_edita: string | null;
+}
+
+export interface EntradaCreate {
+  codigo: string;
+  precio: number;
+  fecha: string;
+  reingreso?: boolean;
+  id_titular: string;
+  id_usuario_creacion: string;
+}
+
+export interface EntradaUpdate {
+  precio?: number;
+  reingreso?: boolean;
+}
+
+// ---------- SEDE ----------
+export interface SedeRead {
+  id_sede: string;
+  nombre: string;
+  ubicacion: string;
+}
+
+export interface SedeCreate {
+  nombre: string;
+  ubicacion: string;
+}
+
+export interface SedeUpdate {
+  nombre?: string;
+  ubicacion?: string;
+}
+
+// ---------- ATRACCIÓN ----------
+export interface AtraccionRead {
+  id_atraccion: string;
+  nombre: string;
+  edad_minima: number;
+  estatura_minima: number;
+  id_sede: string;
+}
+
+export interface AtraccionCreate {
+  nombre: string;
+  edad_minima: number;
+  estatura_minima: number;
+  id_sede: string;
+}
+
+export interface AtraccionUpdate {
+  nombre?: string;
+  edad_minima?: number;
+  estatura_minima?: number;
+}
+
+// ---------- ACUÁTICA ----------
+export interface AcuaticaRead {
+  id_acuatica: string;
+  id_atraccion: string;
+  profundidad: number | null;
+  capacidad: number;
+  propulsion: string;
+}
+
+export interface AcuaticaCreate {
+  id_atraccion: string;
+  profundidad: number;
+  capacidad: number;
+  propulsion: string;
+}
+
+export interface AcuaticaUpdate {
+  profundidad?: number;
+  capacidad?: number;
+  propulsion?: string;
+}
+
+// ---------- ELECTRÓNICA ----------
 export interface ElectronicaRead {
   id_electronica: string;
   id_atraccion: string;
@@ -91,6 +181,7 @@ export interface ElectronicaUpdate {
   equipamiento?: string | null;
 }
 
+// ---------- MECÁNICA ----------
 export interface MecanicaRead {
   id_mecanica: string;
   id_atraccion: string;
@@ -100,6 +191,7 @@ export interface MecanicaCreate {
   id_atraccion: string;
 }
 
+// ---------- FÍSICA ----------
 export interface FisicaRead {
   id_fisica: string;
   id_atraccion: string;

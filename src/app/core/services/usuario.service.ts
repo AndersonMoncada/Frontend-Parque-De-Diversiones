@@ -12,11 +12,15 @@ export class UsuarioService {
 
   list(): Observable<UsuarioRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<UsuarioRead[]>(this.base, { params });
+    return this.http.get<UsuarioRead[]>(`${this.base}`, { params });
+  }
+
+  get(id: string): Observable<UsuarioRead> {
+    return this.http.get<UsuarioRead>(`${this.base}/${id}`);
   }
 
   create(body: UsuarioCreate): Observable<UsuarioRead> {
-    return this.http.post<UsuarioRead>(this.base, body);
+    return this.http.post<UsuarioRead>(`${this.base}`, body);
   }
 
   update(id: string, body: UsuarioUpdate): Observable<UsuarioRead> {

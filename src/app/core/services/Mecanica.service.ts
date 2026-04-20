@@ -12,11 +12,15 @@ export class MecanicaService {
 
   list(): Observable<MecanicaRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<MecanicaRead[]>(this.base, { params });
+    return this.http.get<MecanicaRead[]>(`${this.base}`, { params });
+  }
+
+  get(id: string): Observable<MecanicaRead> {
+    return this.http.get<MecanicaRead>(`${this.base}/${id}`);
   }
 
   create(body: MecanicaCreate): Observable<MecanicaRead> {
-    return this.http.post<MecanicaRead>(this.base, body);
+    return this.http.post<MecanicaRead>(`${this.base}`, body);
   }
 
   delete(id: string): Observable<void> {
