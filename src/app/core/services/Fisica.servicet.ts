@@ -2,25 +2,25 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { MecanicaCreate, MecanicaRead } from '../../models/api.models';
+import { FisicaCreate, FisicaRead } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
-export class MecanicaService {
-  private readonly base = `${environment.apiUrl}/mecanicas`;
+export class FisicaService {
+  private readonly base = `${environment.apiUrl}/fisicas`;
 
   constructor(private readonly http: HttpClient) {}
 
-  list(): Observable<MecanicaRead[]> {
+  list(): Observable<FisicaRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<MecanicaRead[]>(`${this.base}`, { params });
+    return this.http.get<FisicaRead[]>(`${this.base}`, { params });
   }
 
-  get(id: string): Observable<MecanicaRead> {
-    return this.http.get<MecanicaRead>(`${this.base}/${id}`);
+  get(id: string): Observable<FisicaRead> {
+    return this.http.get<FisicaRead>(`${this.base}/${id}`);
   }
 
-  create(body: MecanicaCreate): Observable<MecanicaRead> {
-    return this.http.post<MecanicaRead>(`${this.base}`, body);
+  create(body: FisicaCreate): Observable<FisicaRead> {
+    return this.http.post<FisicaRead>(`${this.base}`, body);
   }
 
   delete(id: string): Observable<void> {

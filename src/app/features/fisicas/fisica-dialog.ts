@@ -4,17 +4,17 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MecanicaService } from '../../core/services/mecanica.service';
+import { FisicaService } from '../../core/services/fisica.service';
 
 @Component({
-  selector: 'app-mecanica-dialog',
+  selector: 'app-fisica-dialog',
   standalone: true,
   imports: [ReactiveFormsModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule],
-  templateUrl: './mecanica-dialog.html',
+  templateUrl: './fisica-dialog.html',
 })
-export class MecanicaDialogComponent {
+export class FisicaDialogComponent {
   private fb = inject(FormBuilder);
-  private svc = inject(MecanicaService);
+  private svc = inject(FisicaService);
   private dialogRef = inject(MatDialogRef);
 
   form = this.fb.group({

@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nuevo accede' : 'Editar accede' }}</h2>
+<mat-dialog-content class="dialog-body">
+  <form [formGroup]="form" class="grid">
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>ID Entrada</mat-label>
+      <input matInput formControlName="id_entrada" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>ID Atraccion</mat-label>
+      <input matInput formControlName="id_atraccion" />
+    </mat-form-field>
+    
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()">Guardar</button>
+</mat-dialog-actions>

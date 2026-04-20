@@ -12,11 +12,19 @@ export class VisitanteService {
 
   list(): Observable<VisitanteRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<VisitanteRead[]>(this.base, { params });
+    return this.http.get<VisitanteRead[]>(`${this.base}`, { params });
+  }
+
+  get(id: string): Observable<VisitanteRead> {
+    return this.http.get<VisitanteRead>(`${this.base}/${id}`);
+  }
+
+  listByTitular(idTitular: string): Observable<VisitanteRead[]> {
+    return this.http.get<VisitanteRead[]>(`${this.base}/titular/${idTitular}`);
   }
 
   create(body: VisitanteCreate): Observable<VisitanteRead> {
-    return this.http.post<VisitanteRead>(this.base, body);
+    return this.http.post<VisitanteRead>(`${this.base}`, body);
   }
 
   update(id: string, body: VisitanteUpdate): Observable<VisitanteRead> {
