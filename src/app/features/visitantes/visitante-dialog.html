@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nuevo Visitante' : 'Editar Visitante' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline"><mat-label>Nombre</mat-label><input matInput formControlName="nombre_visitante"></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>Edad</mat-label><input matInput type="number" formControlName="edad"></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>Estatura (m)</mat-label><input matInput type="number" step="0.01" formControlName="estatura"></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>ID Titular</mat-label><input matInput formControlName="id_titular"></mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>
