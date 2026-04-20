@@ -12,9 +12,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/frontend-parque-de-diversiones",
+            "outputPath": {
+              "base": "dist/frontend-parque-de-diversiones"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
@@ -30,5 +32,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

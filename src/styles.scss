@@ -1,0 +1,27 @@
+/* Estilos globales */
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table-wrap {
+  overflow: auto;
+}
+
+.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
