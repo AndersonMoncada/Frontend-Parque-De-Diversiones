@@ -15,6 +15,10 @@ export class MecanicaService {
     return this.http.get<MecanicaRead[]>(this.base, { params });
   }
 
+  get(id: string): Observable<MecanicaRead> {
+    return this.http.get<MecanicaRead>(`${this.base}/${id}`);
+  }
+
   create(body: MecanicaCreate): Observable<MecanicaRead> {
     return this.http.post<MecanicaRead>(this.base, body);
   }

@@ -15,6 +15,10 @@ export class ElectronicaService {
     return this.http.get<ElectronicaRead[]>(this.base, { params });
   }
 
+  get(id: string): Observable<ElectronicaRead> {
+    return this.http.get<ElectronicaRead>(`${this.base}/${id}`);
+  }
+
   create(body: ElectronicaCreate): Observable<ElectronicaRead> {
     return this.http.post<ElectronicaRead>(this.base, body);
   }
