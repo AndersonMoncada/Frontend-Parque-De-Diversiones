@@ -39,19 +39,19 @@ export const routes: Routes = [
       {
         path: 'entradas',
         loadComponent: () =>
-          import('./features/entradas/entrada-list').then((m) => m.EntradaListComponent),
+          import('./features/entrada/entrada-list').then((m) => m.EntradaListComponent),
       },
 
       {
         path: 'sedes',
         loadComponent: () =>
-          import('./features/sedes/sede-list').then((m) => m.SedeListComponent),
+          import('./features/sede/sede-list').then((m) => m.SedeListComponent),
       },
 
       {
         path: 'atracciones',
         loadComponent: () =>
-          import('./features/atracciones/atraccion-list').then((m) => m.AtraccionListComponent),
+          import('./features/atracciones/atracciones-list').then((m) => m.AtraccionListComponent),
       },
 
       {
