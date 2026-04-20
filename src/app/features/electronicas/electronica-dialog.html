@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nueva Electrónica' : 'Editar Electrónica' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-grid">
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>ID Atracción</mat-label>
+      <input matInput formControlName="id_atraccion" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Experiencia</mat-label>
+      <input matInput formControlName="experiencia" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Equipamiento</mat-label>
+      <input matInput formControlName="equipamiento" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>
