@@ -43,7 +43,19 @@ export class VisitanteListComponent implements AfterViewInit {
 
   nuevo() { this.openDialog('create'); }
   editar(row: VisitanteRead) { this.openDialog('edit', row); }
+  
+  eliminar(row: VisitanteRead) {
+    if (!confirm(`¿Eliminar visitante ${row.nombre_visitante}?`)) return;
 
+    this.svc.delete(row.id_visitante).subscribe({
+      next: () => {
+        this.snack.open('visitante eliminado', 'OK', { duration: 3000 });
+        this.reload();
+      },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+    });
+  }
+  
   private openDialog(mode: 'create' | 'edit', row?: VisitanteRead) {
     this.dialog.open(VisitanteDialogComponent, {
       width: '520px',
