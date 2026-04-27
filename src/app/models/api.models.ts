@@ -200,3 +200,15 @@ export interface FisicaRead {
 export interface FisicaCreate {
   id_atraccion: string;
 }
+
+// ---------- ACCEDE ----------
+export interface AccedeRead {
+  id_entrada: string;
+  id_atraccion: string;
+  fecha_acceso?: string;
+}
+
+export interface AccedeCreate {
+  id_entrada: string;
+  id_atraccion: string;
+}
