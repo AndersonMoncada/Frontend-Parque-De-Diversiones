@@ -1,26 +1,31 @@
+// src/app/core/services/titular.service.ts
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { MecanicaCreate, MecanicaRead } from '../../models/api.models';
+import { TitularCreate, TitularRead, TitularUpdate } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
-export class MecanicaService {
-  private readonly base = `${environment.apiUrl}/mecanicas`;
+export class TitularService {
+  private readonly base = `${environment.apiUrl}/titulares`;
 
   constructor(private readonly http: HttpClient) {}
 
-  list(): Observable<MecanicaRead[]> {
+  list(): Observable<TitularRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<MecanicaRead[]>(`${this.base}`, { params });
+    return this.http.get<TitularRead[]>(`${this.base}`, { params });
   }
 
-  get(id: string): Observable<MecanicaRead> {
-    return this.http.get<MecanicaRead>(`${this.base}/${id}`);
+  get(id: string): Observable<TitularRead> {
+    return this.http.get<TitularRead>(`${this.base}/${id}`);
   }
 
-  create(body: MecanicaCreate): Observable<MecanicaRead> {
-    return this.http.post<MecanicaRead>(`${this.base}`, body);
+  create(body: TitularCreate): Observable<TitularRead> {
+    return this.http.post<TitularRead>(`${this.base}`, body);
+  }
+
+  update(id: string, body: TitularUpdate): Observable<TitularRead> {
+    return this.http.put<TitularRead>(`${this.base}/${id}`, body);
   }
 
   delete(id: string): Observable<void> {

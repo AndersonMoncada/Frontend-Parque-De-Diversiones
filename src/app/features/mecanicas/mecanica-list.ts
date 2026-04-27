@@ -10,20 +10,27 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { filter } from 'rxjs/operators';
 import { MecanicaService } from '../../core/services/mecanica.service';
 import { MecanicaRead } from '../../models/api.models';
-import { MecanicaDialogComponent } from './mecanica-dialog';
+import { MecanicaDialogComponent, MecanicaDialogData } from './mecanica-dialog';
 
 @Component({
   selector: 'app-mecanica-list',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatSnackBarModule],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+  ],
   templateUrl: './mecanica-list.html',
 })
 export class MecanicaListComponent implements AfterViewInit {
-  private readonly svc = inject(MecanicaService);
+  private readonly svc    = inject(MecanicaService);
   private readonly dialog = inject(MatDialog);
-  private readonly snack = inject(MatSnackBar);
+  private readonly snack  = inject(MatSnackBar);
 
-  displayedColumns = ['id_atraccion', 'acciones'];
+  displayedColumns = ['id_mecanica', 'id_atraccion', 'acciones'];
   dataSource = new MatTableDataSource<MecanicaRead>([]);
   loading = true;
 
@@ -42,19 +49,17 @@ export class MecanicaListComponent implements AfterViewInit {
   }
 
   nuevo() {
-    this.dialog.open(MecanicaDialogComponent, { width: '400px' })
-      .afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
+    this.dialog.open(MecanicaDialogComponent, {
+      width: '400px',
+      data: { mode: 'create' } as MecanicaDialogData,
+    }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
   }
 
   eliminar(row: MecanicaRead) {
-    if (!confirm(`¿Eliminar Mecanica ${row.id_mecanica}?`)) return;
-
+    if (!confirm(`¿Eliminar mecánica ${row.id_mecanica}?`)) return;
     this.svc.delete(row.id_mecanica).subscribe({
-      next: () => {
-        this.snack.open('Usuario eliminado', 'OK', { duration: 3000 });
-        this.reload();
-      },
-      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+      next: () => { this.snack.open('Mecánica eliminada', 'OK', { duration: 3000 }); this.reload(); },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar'),
     });
   }
 }
