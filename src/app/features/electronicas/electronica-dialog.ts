@@ -1,22 +1,22 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ElectronicaService } from '../../core/services/electronica.service';
-import { ElectronicaRead } from '../../models/api.models';
-import { CommonModule } from '@angular/common';
 
-
-export interface ElectronicaDialogData { mode: 'create' | 'edit'; row?: ElectronicaRead; }
+export interface ElectronicaDialogData {
+  mode: 'create' | 'edit';
+  row?: any;
+}
 
 @Component({
   selector: 'app-electronica-dialog',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
@@ -24,43 +24,16 @@ export interface ElectronicaDialogData { mode: 'create' | 'edit'; row?: Electron
     MatInputModule,
     MatSnackBarModule,
   ],
-  template: `
-    <h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nueva' : 'Editar' }} Electrónica</h2>
-    <mat-dialog-content>
-      <form [formGroup]="form"
-            style="display:flex; flex-direction:column; gap:12px; padding-top:8px">
-
-        @if (data.mode === 'create') {
-          <mat-form-field>
-          <mat-label>ID Atracción</mat-label>
-          <input matInput formControlName="id_atraccion" />
-        </mat-form-field>
-
-}
-        <mat-form-field>
-          <mat-label>Experiencia</mat-label>
-          <input matInput formControlName="experiencia" />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Equipamiento</mat-label>
-          <input matInput formControlName="equipamiento" />
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="cancel()">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="save()">Guardar</button>
-    </mat-dialog-actions>
-  `,
+  templateUrl: './electronica-dialog.html',
 })
 export class ElectronicaDialogComponent {
   private fb = inject(FormBuilder);
   private svc = inject(ElectronicaService);
   private dialogRef = inject(MatDialogRef);
+  private snack = inject(MatSnackBar);
   readonly data = inject<ElectronicaDialogData>(MAT_DIALOG_DATA);
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     id_atraccion: ['', Validators.required],
     experiencia: ['', Validators.required],
     equipamiento: [''],
@@ -74,22 +47,39 @@ export class ElectronicaDialogComponent {
   }
 
   save() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const v = this.form.getRawValue();
 
     if (this.data.mode === 'create') {
       this.svc.create({
-        id_atraccion: v.id_atraccion!,
-        experiencia: v.experiencia!,
-        equipamiento: v.equipamiento ?? null,
-      }).subscribe(() => this.dialogRef.close(true));
+        id_atraccion: v.id_atraccion,
+        experiencia: v.experiencia,
+        equipamiento: v.equipamiento || null,
+      }).subscribe({
+        next: () => this.dialogRef.close(true),
+        error: (err) => this.snack.open(this.msg(err), 'Cerrar', { duration: 6000 })
+      });
     } else {
-      this.svc.update(this.data.row!.id_electronica, {
-        experiencia: v.experiencia ?? undefined,
-        equipamiento: v.equipamiento ?? undefined,
-      }).subscribe(() => this.dialogRef.close(true));
+      this.svc.update(this.data.row.id_electronica, {
+        experiencia: v.experiencia,
+        equipamiento: v.equipamiento || null,
+      }).subscribe({
+        next: () => this.dialogRef.close(true),
+        error: (err) => this.snack.open(this.msg(err), 'Cerrar', { duration: 6000 })
+      });
     }
   }
 
   cancel() { this.dialogRef.close(false); }
+
+  private msg(err: any): string {
+    const d = err.error?.detail;
+    if (typeof d === 'string') return d;
+    if (Array.isArray(d)) return d.map((x: any) => x.msg ?? JSON.stringify(x)).join('; ');
+    return err.message || 'Error al guardar';
+  }
 }
