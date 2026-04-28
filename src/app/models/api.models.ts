@@ -43,6 +43,7 @@ export interface TitularCreate {
 export interface TitularUpdate {
   nombre?: string;
   telefono?: string | null;
+   id_usuario_edita?: string;
 }
 
 // ---------- VISITANTE ----------
@@ -88,12 +89,12 @@ export interface EntradaRead {
 }
 
 export interface EntradaCreate {
-  codigo: string;
-  precio: number;
-  fecha: string;
-  reingreso?: boolean;
-  id_titular: string;
-  id_usuario_creacion: string;
+  codigo              : string;
+  precio              : number;
+  fecha               : string;  
+  reingreso?          : boolean;
+  id_titular          : string;
+  id_usuario_creacion : string;
 }
 
 export interface EntradaUpdate {
