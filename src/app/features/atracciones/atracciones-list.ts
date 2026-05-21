@@ -15,6 +15,7 @@ import { AtraccionDialogComponent, AtraccionDialogData } from './atracciones-dia
 
 @Component({
   selector: 'app-atraccion-list',
+  standalone: true,
   imports: [
     MatTableModule,
     MatPaginatorModule,

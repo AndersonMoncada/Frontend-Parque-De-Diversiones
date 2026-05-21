@@ -1,30 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { environment } from '../../../environments/environment';
+import { API_URL } from '../api-url';
 import { AccedeCreate, AccedeRead } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class AccedeService {
-  private readonly base = `${environment.apiUrl}/accede`;
+  private readonly base = `${API_URL}/accede`;
 
   constructor(private readonly http: HttpClient) {}
 
-  listarPorEntrada(id: string): Observable<AccedeRead[]> {
-    return this.http.get<AccedeRead[]>(`${this.base}/entrada/${id}`);
+  getByEntrada(idEntrada: string): Observable<AccedeRead[]> {
+    return this.http.get<AccedeRead[]>(`${this.base}/entrada/${idEntrada}`);
   }
 
-  listarPorAtraccion(id: string): Observable<AccedeRead[]> {
-    return this.http.get<AccedeRead[]>(`${this.base}/atraccion/${id}`);
+  getByAtraccion(idAtraccion: string): Observable<AccedeRead[]> {
+    return this.http.get<AccedeRead[]>(`${this.base}/atraccion/${idAtraccion}`);
   }
 
   create(body: AccedeCreate): Observable<AccedeRead> {
-    return this.http.post<AccedeRead>(`${this.base}`, body);
+    return this.http.post<AccedeRead>(this.base, body);
   }
 
   delete(idEntrada: string, idAtraccion: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${idEntrada}/${idAtraccion}`);
   }
-
 }

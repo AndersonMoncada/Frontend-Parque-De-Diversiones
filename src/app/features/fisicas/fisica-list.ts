@@ -10,12 +10,15 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { filter } from 'rxjs/operators';
 import { FisicaService } from '../../core/services/fisica.service';
 import { FisicaRead } from '../../models/api.models';
-import { FisicaDialogComponent } from './fisica-dialog';
+import { FisicaDialogComponent, FisicaDialogData } from './fisica-dialog';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-fisica-list',
   standalone: true,
   imports: [
+    
+    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
@@ -26,54 +29,40 @@ import { FisicaDialogComponent } from './fisica-dialog';
   templateUrl: './fisica-list.html',
 })
 export class FisicaListComponent implements AfterViewInit {
-  private readonly svc = inject(FisicaService);
+  private readonly svc    = inject(FisicaService);
   private readonly dialog = inject(MatDialog);
-  private readonly snack = inject(MatSnackBar);
+  private readonly snack  = inject(MatSnackBar);
 
-  displayedColumns = ['id_atraccion', 'acciones'];
+  displayedColumns = ['id_fisica', 'id_atraccion', 'acciones'];
   dataSource = new MatTableDataSource<FisicaRead>([]);
   loading = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  ngAfterViewInit() { this.dataSource.paginator = this.paginator; }
 
-  constructor() {
-    this.reload();
-  }
+  constructor() { this.reload(); }
 
   reload() {
     this.loading = true;
     this.svc.list().subscribe({
-      next: (data) => {
-        this.dataSource.data = data;
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-        this.snack.open('Error al cargar atracciones físicas', 'Cerrar');
-      }
+      next: (data) => { this.dataSource.data = data; this.loading = false; },
+      error: () => { this.loading = false; this.snack.open('Error al cargar físicas', 'Cerrar'); }
     });
   }
 
   nuevo() {
-    this.dialog.open(FisicaDialogComponent, { width: '400px' })
-      .afterClosed()
-      .pipe(filter(Boolean))
-      .subscribe(() => this.reload());
+    this.dialog.open(FisicaDialogComponent, {
+      width: '400px',
+      data: { mode: 'create' } as FisicaDialogData,
+    }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
   }
 
   eliminar(row: FisicaRead) {
-    if (!confirm(`¿Eliminar atracción física ${row.id_atraccion}?`)) return;
-
+    if (!confirm(`¿Eliminar física ${row.id_fisica}?`)) return;
     this.svc.delete(row.id_fisica).subscribe({
-      next: () => {
-        this.snack.open('Atracción eliminada correctamente', 'OK', { duration: 3000 });
-        this.reload();
-      },
-      error: () => this.snack.open('Error al eliminar', 'Cerrar')
+      next: () => { this.snack.open('Física eliminada', 'OK', { duration: 3000 }); this.reload(); },
+      error: () => this.snack.open('Error al eliminar', 'Cerrar'),
     });
   }
 }

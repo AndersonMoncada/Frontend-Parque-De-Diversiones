@@ -7,7 +7,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./features/login/login').then((m) => m.LoginComponent),
+      import('./features/login/login').then(m => m.LoginComponent),
   },
 
   {
@@ -17,68 +17,63 @@ export const routes: Routes = [
       import('./features/shell/main-layout').then((m) => m.MainLayoutComponent),
     children: [
       { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
-
       {
         path: 'usuarios',
         loadComponent: () =>
           import('./features/usuarios/usuario-list').then((m) => m.UsuarioListComponent),
       },
-
       {
         path: 'titulares',
         loadComponent: () =>
           import('./features/titulares/titular-list').then((m) => m.TitularListComponent),
       },
-
       {
         path: 'visitantes',
         loadComponent: () =>
           import('./features/visitantes/visitante-list').then((m) => m.VisitanteListComponent),
       },
-
       {
         path: 'entradas',
         loadComponent: () =>
           import('./features/entrada/entrada-list').then((m) => m.EntradaListComponent),
       },
-
       {
         path: 'sedes',
         loadComponent: () =>
           import('./features/sede/sede-list').then((m) => m.SedeListComponent),
       },
-
       {
         path: 'atracciones',
         loadComponent: () =>
           import('./features/atracciones/atracciones-list').then((m) => m.AtraccionListComponent),
       },
-
       {
         path: 'acuaticas',
         loadComponent: () =>
-          import('./features/acuaticas/acuatica-list').then((m) => m.AcuaticaListComponent),
+          import('./features/Acuatica/acuatica-list').then((m) => m.AcuaticaListComponent),
       },
-
       {
         path: 'electronicas',
         loadComponent: () =>
           import('./features/electronicas/electronica-list').then((m) => m.ElectronicaListComponent),
       },
-
       {
         path: 'mecanicas',
         loadComponent: () =>
           import('./features/mecanicas/mecanica-list').then((m) => m.MecanicaListComponent),
       },
-
       {
         path: 'fisicas',
         loadComponent: () =>
           import('./features/fisicas/fisica-list').then((m) => m.FisicaListComponent),
       },
+      {
+        path: 'accede',
+        loadComponent: () =>
+          import('./features/accede/accede-list').then((m) => m.AccedeListComponent),
+      },
     ],
   },
 
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'login' },
 ];

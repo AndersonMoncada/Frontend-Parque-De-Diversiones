@@ -1,33 +1,34 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { environment } from '../../../environments/environment';
-import { SedeCreate, SedeUpdate, SedeRead} from '../../models/api.models';
+import { map, Observable } from 'rxjs';
+import { API_URL } from '../api-url';
+import { SedeCreate, SedeRead, SedeUpdate } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class SedeService {
-  private readonly base = `${environment.apiUrl}/sedes`;
+  private readonly base = `${API_URL}/sedes`;
 
   constructor(private readonly http: HttpClient) {}
-  list(): Observable<SedeRead[]>{
-    return this.http.get<SedeRead[]>(`${this.base}`);
+
+  list(): Observable<SedeRead[]> {
+    const params = new HttpParams().set('skip', 0).set('limit', 500);
+    return this.http.get<SedeRead[]>(this.base, { params });
   }
 
-  get(id: string): Observable<SedeRead>{
-    return this.http.get<SedeRead>(`${this.base}/sede/${id}`);
+  get(id: string): Observable<SedeRead> {
+    return this.http.get<SedeRead>(`${this.base}/${id}`);
   }
 
-  create(body: SedeCreate): Observable<SedeRead>{
-    return this.http.post<SedeRead>(`${this.base}`, body);
+  create(body: SedeCreate): Observable<SedeRead> {
+    return this.http.post<SedeRead>(this.base, body);
   }
 
-  update(id: string, body: SedeUpdate): Observable<SedeRead>{
+  update(id: string, body: SedeUpdate): Observable<SedeRead> {
     return this.http.put<SedeRead>(`${this.base}/${id}`, body);
   }
 
-  delete(id: string): Observable<void>{
-    return this.http.delete<void>(`${this.base}/${id}`);
+  delete(id: string): Observable<void> {
+    return this.http.delete(`${this.base}/${id}`, { observe: 'response' })
+      .pipe(map(() => undefined));
   }
-
-} 
+}

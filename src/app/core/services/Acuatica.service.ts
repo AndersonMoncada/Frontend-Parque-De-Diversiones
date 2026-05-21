@@ -1,18 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { API_URL } from '../api-url';
 import { AcuaticaCreate, AcuaticaRead, AcuaticaUpdate } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class AcuaticaService {
-  private readonly base = `${environment.apiUrl}/acuaticas`;
+  private readonly base = `${API_URL}/acuaticas`;
 
   constructor(private readonly http: HttpClient) {}
 
   list(): Observable<AcuaticaRead[]> {
     const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<AcuaticaRead[]>(`${this.base}`, { params });
+    return this.http.get<AcuaticaRead[]>(this.base, { params });
   }
 
   get(id: string): Observable<AcuaticaRead> {
@@ -20,7 +20,7 @@ export class AcuaticaService {
   }
 
   create(body: AcuaticaCreate): Observable<AcuaticaRead> {
-    return this.http.post<AcuaticaRead>(`${this.base}`, body);
+    return this.http.post<AcuaticaRead>(this.base, body);
   }
 
   update(id: string, body: AcuaticaUpdate): Observable<AcuaticaRead> {
@@ -28,6 +28,7 @@ export class AcuaticaService {
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete(`${this.base}/${id}`, { observe: 'response' }).pipe(map(() => undefined));
+    return this.http.delete(`${this.base}/${id}`, { observe: 'response' })
+      .pipe(map(() => undefined));
   }
 }

@@ -1,39 +1,34 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { environment } from '../../../environments/environment';
-import { AtraccionCreate, AtraccionUpdate, AtraccionRead} from '../../models/api.models';
+import { map, Observable } from 'rxjs';
+import { API_URL } from '../api-url';
+import { AtraccionCreate, AtraccionRead, AtraccionUpdate } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class AtraccionService {
-  private readonly base = `${environment.apiUrl}/atracciones`;
+  private readonly base = `${API_URL}/atracciones`;
 
   constructor(private readonly http: HttpClient) {}
-  list(): Observable<AtraccionRead[]>{
-    return this.http.get<AtraccionRead[]>(`${this.base}`);
+
+  list(): Observable<AtraccionRead[]> {
+    const params = new HttpParams().set('skip', 0).set('limit', 500);
+    return this.http.get<AtraccionRead[]>(this.base, { params });
   }
 
-  get(id: string): Observable<AtraccionRead>{
+  get(id: string): Observable<AtraccionRead> {
     return this.http.get<AtraccionRead>(`${this.base}/${id}`);
   }
 
-  listarPorSede(id: string): Observable<AtraccionRead[]>{
-    return this.http.get<AtraccionRead[]>(`${this.base}/sede/${id}`);
-  } 
-
-  create(body: AtraccionCreate): Observable<AtraccionRead>{
-    return this.http.post<AtraccionRead>(`${this.base}`, body);
+  create(body: AtraccionCreate): Observable<AtraccionRead> {
+    return this.http.post<AtraccionRead>(this.base, body);
   }
 
-  update(id: string, body: AtraccionUpdate): Observable<AtraccionRead>{
+  update(id: string, body: AtraccionUpdate): Observable<AtraccionRead> {
     return this.http.put<AtraccionRead>(`${this.base}/${id}`, body);
   }
 
-  delete(id: string): Observable<void>{
-    return this.http.delete<void>(`${this.base}/${id}`);
+  delete(id: string): Observable<void> {
+    return this.http.delete(`${this.base}/${id}`, { observe: 'response' })
+      .pipe(map(() => undefined));
   }
-
-
-
-} 
+}
