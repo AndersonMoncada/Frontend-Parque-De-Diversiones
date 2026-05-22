@@ -3,8 +3,8 @@ Interfaz web del sistema de gestión del Parque de Atracciones, desarrollada en 
 
 🎥 Video demostrativo
 
-📌 URL del video: [[Insertar enlace aquí]](https://drive.google.com/file/d/18NkgR83fhBc1VAlLsKxzqnMT9yGoqUA-/view?usp=sharing)
-
+📌 URL del video API: [[VIDEO API]](https://drive.google.com/file/d/18NkgR83fhBc1VAlLsKxzqnMT9yGoqUA-/view?usp=sharing)
+📌 URL del video DESPLIEGUE  [[VIDEO DESPLIEGUE]](https://drive.google.com/file/d/1LF9aOFdqg7d4jtBYTu9XzDy1SxyMsrYr/view?usp=sharing)
 
 Tecnologías utilizadas
 
